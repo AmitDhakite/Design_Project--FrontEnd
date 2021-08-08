@@ -127,11 +127,11 @@ export default function SignIn() {
             label="Remember me"
           />
           <Button
+            style={{backgroundColor: "rgb(64,80,181)", color: "white"}} 
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
-            className={classes.submit}
+                className={classes.submit}
           >
             Sign Up
           </Button>

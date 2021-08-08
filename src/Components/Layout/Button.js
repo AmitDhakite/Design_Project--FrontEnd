@@ -69,7 +69,7 @@ export default function CustomizedButtons({name}) {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <Button variant="contained" color="primary" className={classes.margin}>
+        <Button variant="contained" style={{backgroundColor: "#ff5722", color: "white"}} className={classes.margin}>
           {name}
         </Button>
       </ThemeProvider>

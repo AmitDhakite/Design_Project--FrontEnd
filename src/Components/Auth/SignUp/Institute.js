@@ -110,7 +110,8 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            style={{backgroundColor: "rgb(64,80,181)", color: "white"}} 
+
             className={classes.submit}
           >
             Sign Up
