@@ -2,7 +2,9 @@ import React from "react";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./Components/Auth/Login";
 import Register from "./Components/Auth/Register";
+import AdminLogin from "./Components/Auth/AdminLogin";
 import Homepage from "./Components/Homepage";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -14,6 +16,12 @@ function App() {
           </Route>
           <Route path="/Register" exact>
             <Register />
+          </Route>
+          <Route path="/admin" exact>
+            <AdminLogin />
+          </Route>
+          <Route path="/dashboard" exact>
+            <Dashboard />
           </Route>
           <Route path="/">
             <Login />

@@ -13,8 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
-import axios from "../../axios";
-import Alert from "../Layout/Alert";
 
 function Copyright() {
   return (
@@ -52,10 +50,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes1 = useStyles();
 
-  const history = useHistory();
-  const [showMessage, setShowMessage] = useState(false);
   const [user, setUser] = useState({
-    instituteEmail: "",
+    email: "",
     password: "",
   });
 
@@ -64,26 +60,6 @@ export default function SignIn() {
     setUser((p) => {
       return { ...p, [name]: value };
     });
-  };
-
-  const login = async (e) => {
-    e.preventDefault();
-    console.log(user);
-    if (user.instituteEmail === "" || user.password === "") {
-      return;
-    }
-    try {
-      const res = await axios.post("/login", user);
-      console.log(res.data);
-      if (res.data === "Wrong Credentials") {
-        setShowMessage(true);
-      } else {
-        localStorage.setItem("user", res.data);
-        history.push("/dashboard");
-      }
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (
@@ -95,14 +71,9 @@ export default function SignIn() {
         </Avatar>
         <h1>IIEC PORTAL</h1>
         <Typography component="h1" variant="h5">
-          Sign In
+          Login as Admin
         </Typography>
-        <form
-          className={classes1.form}
-          noValidate
-          onChange={changeHandler}
-          onSubmit={login}
-        >
+        <form className={classes1.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -110,7 +81,7 @@ export default function SignIn() {
             fullWidth
             id="email"
             label="Email Address"
-            name="instituteEmail"
+            name="email"
             autoComplete="email"
             autoFocus
           />
@@ -125,13 +96,6 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          {showMessage && (
-            <Alert color="red" message="Invalid Email or Password!" />
-          )}
           <Button
             type="submit"
             fullWidth
