@@ -15,6 +15,10 @@ import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
 import axios from "../../axios";
 import Alert from "../Layout/Alert";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 function Copyright() {
   return (
@@ -78,12 +82,18 @@ export default function SignIn() {
       if (res.data === "Wrong Credentials") {
         setShowMessage(true);
       } else {
-        localStorage.setItem("user", res.data);
+        localStorage.setItem("userId", res.data._id);
+        localStorage.setItem("name", res.data.name);
         history.push("/dashboard");
       }
     } catch (e) {
       console.log(e);
     }
+  };
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
 
   return (

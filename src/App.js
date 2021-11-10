@@ -6,6 +6,8 @@ import AdminLogin from "./Components/Auth/AdminLogin";
 import Homepage from "./Components/Homepage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 
+import MyProfile from "./Components/Dashboard/MyProfile";
+
 function App() {
   return (
     <React.Fragment>
@@ -22,6 +24,9 @@ function App() {
           </Route>
           <Route path="/dashboard" exact>
             <Dashboard />
+          </Route>
+          <Route path="/myprofile" exact>
+            <MyProfile />
           </Route>
           <Route path="/">
             <Login />

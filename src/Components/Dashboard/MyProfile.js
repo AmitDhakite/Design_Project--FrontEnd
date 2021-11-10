@@ -102,42 +102,21 @@ function DashboardContent() {
     setOpen(!open);
   };
 
-  const [courses, setCourses] = useState();
+  const [el1, setEl1] = useState();
+  const [el2, setEl2] = useState();
 
   useEffect(async () => {
     try {
-      const res = await axios.get("/getCourses");
-      setCourses(res.data);
+      const res = await axios.post("/getSelectedElectives", {
+        userId: localStorage.getItem("userId"),
+      });
+      setEl1(res.data[0]);
+      setEl2(res.data[1]);
       console.log(res.data);
     } catch (er) {
       console.log(er);
     }
   }, []);
-
-  const [el2, setEl2] = React.useState("");
-  const handleChange = (event) => {
-    setEl2(event.target.value);
-  };
-
-  const [el1, setEl1] = React.useState("");
-
-  const handleChange1 = (event) => {
-    setEl1(event.target.value);
-  };
-
-  const submitElectives = async () => {
-    console.log(el1, el2);
-    try {
-      const res = await axios.post("/addElectives", {
-        userId: localStorage.getItem("userId"),
-        el1,
-        el2,
-      });
-      setShowForm(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -171,6 +150,7 @@ function DashboardContent() {
               IIEC
             </Typography>
             {localStorage.getItem("name")}
+
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -193,7 +173,7 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List>
-            <MainListItems page="0" />
+            <MainListItems page="1" />
           </List>
           <Divider />
           <List>{secondaryListItems}</List>
@@ -215,100 +195,18 @@ function DashboardContent() {
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
-                {!showForm && (
-                  <Paper
-                    sx={{
-                      p: 2,
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <h2>
-                      Available Courses:{" "}
-                      <Button
-                        style={{ marginLeft: "350px" }}
-                        variant="contained"
-                        width="50px"
-                        disableElevation
-                        onClick={() => {
-                          setShowForm(true);
-                        }}
-                      >
-                        Select Electives
-                      </Button>
-                    </h2>
-                    {courses?.map((c) => {
-                      return <Course data={c} />;
-                    })}
-                  </Paper>
-                )}
-                {showForm && (
-                  <Paper
-                    sx={{
-                      p: 2,
-                    }}
-                  >
-                    <h2>
-                      Select Elective Courses:{" "}
-                      <Button
-                        style={{ marginLeft: "350px" }}
-                        variant="contained"
-                        width="50px"
-                        disableElevation
-                        onClick={() => {
-                          setShowForm(false);
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </h2>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Elective 1
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={el1}
-                          label="Elective 1"
-                          onChange={handleChange1}
-                        >
-                          {courses.map((c) => {
-                            return <MenuItem value={c.name}>{c.name}</MenuItem>;
-                          })}
-                        </Select>
-                      </FormControl>
-                    </Box>
-                    <Box sx={{ minWidth: 120 }} style={{ marginTop: "50px" }}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Elective 2
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={el2}
-                          label="Elective 2"
-                          onChange={handleChange}
-                        >
-                          {courses.map((c) => {
-                            return <MenuItem value={c.name}>{c.name}</MenuItem>;
-                          })}
-                        </Select>
-                      </FormControl>
-                    </Box>
-                    <Button
-                      style={{ marginLeft: "0px", marginTop: "10px" }}
-                      variant="contained"
-                      width="50px"
-                      disableElevation
-                      onClick={submitElectives}
-                    >
-                      Submit
-                    </Button>
-                  </Paper>
-                )}
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <h2>My Selected Electives:</h2>
+                  {!el1 && !el2 && <h3>No electives selected</h3>}
+                  {el1 && <Course data={el1} />}
+                  {el2 && <Course data={el2} />}
+                </Paper>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
@@ -319,6 +217,6 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
+export default function MyProfile() {
   return <DashboardContent />;
 }

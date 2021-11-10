@@ -26,8 +26,8 @@ const MainListItems = ({ page }) => {
   const toDashboard = () => {
     history.push("/dashboard");
   };
-  const toAccount = () => {
-    history.push("/myAccount");
+  const toProfile = () => {
+    history.push("/myprofile");
   };
   const logout = () => {
     localStorage.clear();
@@ -51,7 +51,11 @@ const MainListItems = ({ page }) => {
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button style={{ backgroundColor: color[1] }}>
+      <ListItem
+        button
+        onClick={toProfile}
+        style={{ backgroundColor: color[1] }}
+      >
         <ListItemIcon>
           <PeopleOutlineIcon style={{ color: "rgb(42, 187, 172)" }} />
         </ListItemIcon>
